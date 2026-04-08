@@ -11,7 +11,7 @@ import com.empresa.entity.Categoria;
 import com.empresa.service.CategoriaService;
 
 @RestController
-@RequestMapping("/rest/Categoria")
+@RequestMapping("/rest/categoria")
 public class CategoriaController {
 
 	@Autowired
