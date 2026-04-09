@@ -13,8 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresa.entity.Cliente;
 import com.empresa.service.ClienteService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/rest/cliente")
+@Tag(name = "Cliente", description = "Operaciones sobre Cliente")
 public class ClienteController {
 
 	@Autowired
@@ -23,6 +28,8 @@ public class ClienteController {
 	
 	@PostMapping
 	@ResponseBody
+	@Operation(summary = "Registrar un nuevo cliente", description = "Registra un nuevo cliente en el sistema y devuelve un mensaje de éxito o error")
+	@Parameter(name = "objCliente", description = "Objeto Cliente a registrar", required = true)
 	public ResponseEntity<?> insertaCliente(@RequestBody Cliente objCliente){
 		HashMap<String, String> mensaje = new HashMap<>();
 		Cliente objSalida = ClienteService.insertaCliente(objCliente);
