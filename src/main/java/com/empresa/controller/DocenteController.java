@@ -17,8 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresa.entity.Docente;
 import com.empresa.service.DocenteService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/rest/docente")
+@Tag(name = "Docente", description = "Operaciones sobre docente")
 public class DocenteController {
 
 	@Autowired
@@ -27,6 +32,8 @@ public class DocenteController {
 	
 	@PostMapping
 	@ResponseBody
+	@Operation(summary = "Registrar un nuevo docente", description = "Registra un nuevo docente en el sistema y devuelve un mensaje de éxito o error")
+	@Parameter(name = "objDocente", description = "Objeto Docente a registrar", required = true)
 	public ResponseEntity<?> insertaDocente(@RequestBody Docente objDocente){
 		HashMap<String, String> mensaje = new HashMap<>();
 		Docente objSalida = docenteService.insertaDocente(objDocente);
@@ -38,11 +45,15 @@ public class DocenteController {
 		return ResponseEntity.ok(mensaje);
 	}
 	
+	@Operation(summary = "Listar docentes por nombre", description = "Obtiene una lista de docentes cuyo nombre coincide con el filtro proporcionado")
+	@Parameter(name = "filtro", description = "Filtro de búsqueda para el nombre del docente", required = true)
 	@GetMapping("/listaDocentePorNombre/{filtro}")
 	public List<Docente> listaDocentePorNombre(@PathVariable String filtro) {
 		return docenteService.listaDocentePorNombre(filtro);
 	}
 	
+	@Operation(summary = "Listar docentes por DNI", description = "Obtiene una lista de docentes cuyo DNI coincide con el filtro proporcionado")
+	@Parameter(name = "dni", description = "Filtro de búsqueda para el DNI del docente", required = true)
 	@GetMapping("/listaDocentePorDni")
 	public List<Docente> listaDocentePorDni(@RequestParam String dni) {
 		return docenteService.listaDocentePorDni(dni);

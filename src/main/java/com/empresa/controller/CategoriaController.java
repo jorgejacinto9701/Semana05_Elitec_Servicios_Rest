@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresa.entity.Categoria;
 import com.empresa.service.CategoriaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/rest/categoria")
+@Tag(name = "Categoría", description = "Operaciones sobre categoria")
 public class CategoriaController {
 
 	@Autowired
@@ -19,6 +23,7 @@ public class CategoriaController {
 	
 	
 	@GetMapping("/listaTodos")
+	@Operation(summary = "Lista todas las categorías", description = "Obtiene una lista de todas las categorías disponibles")
 	public List<Categoria> listaCategoriaPorNombre() {
 		return CategoriaService.listaTodosCategoria();
 	}

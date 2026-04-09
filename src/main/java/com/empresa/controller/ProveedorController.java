@@ -19,8 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.empresa.entity.Proveedor;
 import com.empresa.service.ProveedorService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/rest/proveedor")
+@Tag(name = "Proveedor", description = "Operaciones sobre Proveedor")
 public class ProveedorController {
 
 	@Autowired
@@ -28,6 +33,8 @@ public class ProveedorController {
 	
 	@PostMapping
 	@ResponseBody
+	@Operation(summary = "Registrar un nuevo proveedor", description = "Registra un nuevo proveedor en el sistema y devuelve un mensaje de éxito o error")
+	@Parameter(name = "objProveedor", description = "Objeto Proveedor a registrar", required = true)
 	public ResponseEntity<?> insertaProveedor(@RequestBody Proveedor objProveedor){
 		HashMap<String, Object> salida = new HashMap<>();
 		objProveedor.setIdProveedor(0);
@@ -40,6 +47,8 @@ public class ProveedorController {
 		return ResponseEntity.ok(salida);
 	}
 	
+	@Operation(summary = "Actualizar un proveedor existente", description = "Actualiza la información de un proveedor existente en el sistema y devuelve un mensaje de éxito o error")
+	@Parameter(name = "objProveedor", description = "Objeto Proveedor con la información actualizada", required = true)
 	@PutMapping
 	@ResponseBody
 	public ResponseEntity<?> actualizaProveedor(@RequestBody Proveedor objProveedor){
@@ -51,6 +60,8 @@ public class ProveedorController {
 		return ResponseEntity.ok(salida);
 	}
 	
+	@Operation(summary = "Eliminar un proveedor", description = "Elimina un proveedor del sistema utilizando su ID y devuelve un mensaje de éxito o error")
+	@Parameter(name = "id", description = "ID del proveedor a eliminar", required = true)
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> eliminaProveedor(@PathVariable int id){
 		HashMap<String, Object> salida = new HashMap<>();
@@ -59,11 +70,14 @@ public class ProveedorController {
 		return ResponseEntity.ok(salida);
 	}
 	
+	@Operation(summary = "Listar todos los proveedores", description = "Obtiene una lista de todos los proveedores disponibles en el sistema")
 	@GetMapping
 	public List<Proveedor> listaTodos() {
 		return proveedorService.listaTodos();
 	}
 	
+	@Operation(summary = "Listar proveedores por nombre", description = "Obtiene una lista de proveedores cuyo nombre coincide con el filtro proporcionado")
+	@Parameter(name = "filtro", description = "Filtro de búsqueda para el nombre del proveedor", required = true)
 	@GetMapping("/listaPorNombre/{filtro}")
 	public List<Proveedor> listaPorNombre(@PathVariable String filtro) {
 		return proveedorService.listaPorNombre(filtro);
