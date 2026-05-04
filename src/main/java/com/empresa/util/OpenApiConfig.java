@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI apiInfo() {
+    OpenAPI apiInfo() {
         return new OpenAPI()
             .info(new Info()
                 .title("API de Alumnos")
